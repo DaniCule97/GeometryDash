@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private float speed = 10;
-    private float jumpSpeed = 5;
+    private float jumpForce = 5;
     float playerHeight;
 
     Vector3 startPosition;
@@ -34,8 +34,12 @@ public class Player : MonoBehaviour
             bool touchingGround = floorDistance < playerHeight * 0.6f;
             if (touchingGround)
             {
-                GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpSpeed), ForceMode2D.Impulse);
+                GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             }
         }
+    }
+    public void ResetPosition()
+    {
+        transform.position = startPosition;
     }
 }
