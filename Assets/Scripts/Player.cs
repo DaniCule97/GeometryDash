@@ -10,6 +10,9 @@ public class Player : MonoBehaviour
     float playerHeight;
     bool grounded;
 
+    public enum GameMode { NORMAL, GRAVITYALTERED, DIRECTIONINVERTED, FLYING, GRAVITYCHANGES, GRAVITYCHANGESFLYING};
+    GameMode actualGameMode;
+
     Vector3 startPosition;
 
     public Vector3 StartPosition { get => startPosition; set => startPosition = value; }
@@ -18,6 +21,7 @@ public class Player : MonoBehaviour
     {
         StartPosition = transform.position;
         playerHeight = GetComponent<Collider2D>().bounds.size.y;
+        actualGameMode = GameMode.NORMAL;
     }
     
     void Update()
@@ -27,24 +31,60 @@ public class Player : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        transform.Translate(speed * Time.deltaTime, 0, 0);
-        if (Input.GetKeyDown(KeyCode.Space))
+        switch(actualGameMode)
         {
-            /*
-            RaycastHit2D hit =
-                       Physics2D.Raycast(
-                           transform.position,
-                           new Vector2(0, -1));
+            case GameMode.NORMAL:
+                transform.Translate(speed * Time.deltaTime, 0, 0);
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    /*
+                    RaycastHit2D hit =
+                               Physics2D.Raycast(
+                                   transform.position,
+                                   new Vector2(0, -1));
 
-            float floorDistance = hit.distance;
-            bool touchingGround = floorDistance < playerHeight * 0.6f;
-            if (touchingGround)*/
-            if (grounded)
-            {
-                GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-            }
+                    float floorDistance = hit.distance;
+                    bool touchingGround = floorDistance < playerHeight * 0.6f;
+                    if (touchingGround)*/
+                    if (grounded)
+                    {
+                        GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                    }
+                }
+                break;
+            case GameMode.GRAVITYALTERED:
+                break;
+            case GameMode.FLYING:
+                break;
+            case GameMode.DIRECTIONINVERTED:
+                break;
+            case GameMode.GRAVITYCHANGES:
+                break;
+            case GameMode.GRAVITYCHANGESFLYING:
+                break;
+        }
+        
+    }
+
+    public void ChangeGameMode(GameMode newMode)
+    {
+        switch (actualGameMode)
+        {
+            case GameMode.NORMAL:
+                break;
+            case GameMode.GRAVITYALTERED:
+                break;
+            case GameMode.FLYING:
+                break;
+            case GameMode.DIRECTIONINVERTED:
+                break;
+            case GameMode.GRAVITYCHANGES:
+                break;
+            case GameMode.GRAVITYCHANGESFLYING:
+                break;
         }
     }
+
     public void ResetPosition()
     {
         transform.position = StartPosition;
