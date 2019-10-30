@@ -7,31 +7,38 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    int actualLevel;
     [SerializeField] TMP_Text textStatus;
+    int actualLevel;
     [SerializeField] Transform finish;
-
-    float playerX;
+    [SerializeField] Coin[] coins;
+    
     float endX;
-    int coins;
+
+    public float EndX { get => endX; set => endX = value; }
 
     void Start()
     {
-        playerX = 0;//GetComponent<Player>().StartPosition.x;
-        endX = finish.position.x;
-        coins = 3; //Coins lo inicializo a 3 porque todos los niveles tienen 3
+        endX = finish.position.x; //Coins lo inicializo a 3 porque todos los niveles tienen 3
     }
     void Update()
     {
-        playerX = GetComponent<Player>().transform.position.x;
+    }
+
+    private void ChangeText(float playerX)
+    {
+        Debug.Log(( playerX / endX * 100).ToString("0") + "%");
         if (playerX != 0)
-            textStatus.text = (endX/playerX * 100).ToString("%,%%") + "%";
+            textStatus.text = (playerX / endX * 100).ToString("0") + "%";
         else
             textStatus.text = "0%";
     }
-    private void GetCoin()
+    private void GetCoin(int coinID)
     {
-        coins--;
+        foreach(Coin c in coins)
+        {
+            if (c.Id == coinID)
+                c.enabled = false;
+        }
     }
     
     private void NextLevel()

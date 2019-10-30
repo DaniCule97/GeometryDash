@@ -1248,6 +1248,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textStatus: {fileID: 823912963}
   finish: {fileID: 1038679783}
+  coins:
+  - {fileID: 1236268635}
 --- !u!4 &599744032
 Transform:
   m_ObjectHideFlags: 0
@@ -1260,7 +1262,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &601005113
 PrefabInstance:
@@ -2084,7 +2086,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1057919772
 PrefabInstance:
@@ -2556,6 +2558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2b1053cd5f582e43a797f6bf317aa81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
 --- !u!58 &1236268636
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3908,7 +3911,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1815167064 stripped
 Transform:
@@ -4437,7 +4440,7 @@ RectTransform:
   m_Children:
   - {fileID: 823912962}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

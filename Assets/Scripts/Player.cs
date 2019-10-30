@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -18,11 +19,11 @@ public class Player : MonoBehaviour
         StartPosition = transform.position;
         playerHeight = GetComponent<Collider2D>().bounds.size.y;
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
-
+        //Usado para actualizar el % de partida completado
+        FindObjectOfType<GameController>().SendMessage("ChangeText", transform.position.x);
     }
     private void FixedUpdate()
     {
