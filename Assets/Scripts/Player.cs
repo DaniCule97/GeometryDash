@@ -9,9 +9,10 @@ public class Player : MonoBehaviour
     private float jumpForce = 5;
     float playerHeight;
     float gravityForce;
+    bool gravityInverted;
 
-    public enum GameMode { NORMAL, GRAVITYALTERED, DIRECTIONINVERTED, FLYING, GRAVITYCHANGES, GRAVITYCHANGESFLYING};
-    GameMode actualGameMode;
+    public enum GameMode { NORMAL, GRAVITYALTERED, FLYING, GRAVITYCHANGES, GRAVITYCHANGESFLYING};
+    [SerializeField] GameMode actualGameMode;
 
     Vector3 startPosition;
 
@@ -21,8 +22,9 @@ public class Player : MonoBehaviour
     {
         StartPosition = transform.position;
         playerHeight = GetComponent<Collider2D>().bounds.size.y;
-        actualGameMode = GameMode.NORMAL;
         gravityForce = GetComponent<Rigidbody2D>().gravityScale;
+        ChangeGameMode(actualGameMode);
+        Debug.Log(gravityForce);
     }
     
     void Update()
@@ -32,10 +34,11 @@ public class Player : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        switch(actualGameMode)
+
+        transform.Translate(speed * Time.deltaTime, 0, 0);
+        switch (actualGameMode)
         {
             case GameMode.NORMAL:
-                transform.Translate(speed * Time.deltaTime, 0, 0);
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     RaycastHit2D hit =
@@ -52,7 +55,6 @@ public class Player : MonoBehaviour
                 }
                 break;
             case GameMode.GRAVITYALTERED:
-                transform.Translate(speed * Time.deltaTime, 0, 0);
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     RaycastHit2D hit =
@@ -69,36 +71,43 @@ public class Player : MonoBehaviour
                 }
                 break;
             case GameMode.FLYING:
-                transform.Translate(speed * Time.deltaTime, 0, 0);
                 if (Input.GetKeyDown(KeyCode.Space))
-                    GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -jumpForce), ForceMode2D.Impulse);
+                    GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
                 break;
-            case GameMode.DIRECTIONINVERTED:
-                transform.Translate(-speed * Time.deltaTime, 0, 0);
+            case GameMode.GRAVITYCHANGES:
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    RaycastHit2D hit =
-                               Physics2D.Raycast(
-                                   transform.position,
-                                   new Vector2(0, -1));
+                    RaycastHit2D hit;
+                    if (gravityInverted)
+                        hit = Physics2D.Raycast(
+                            transform.position,
+                            new Vector2(0, 1));
+                    else
+                        hit = Physics2D.Raycast( 
+                            transform.position,
+                            new Vector2(0, -1));
 
                     float floorDistance = hit.distance;
                     bool touchingGround = floorDistance < playerHeight * 0.6f;
                     if (touchingGround)
                     {
-                        GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                        gravityForce = -gravityForce;
+                        GetComponent<Rigidbody2D>().gravityScale = gravityForce;
+                        gravityInverted = !gravityInverted;
                     }
                 }
                 break;
-            case GameMode.GRAVITYCHANGES:
-
-                break;
             case GameMode.GRAVITYCHANGESFLYING:
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    gravityForce = -gravityForce;
+                    GetComponent<Rigidbody2D>().gravityScale = gravityForce;
+                }
                 break;
         }
         
     }
-
+    //Lo hago asi porque mas adelante aqui tambien se cambiara como se ve el personaje
     public void ChangeGameMode(GameMode newMode)
     {
         actualGameMode = newMode;
@@ -113,13 +122,12 @@ public class Player : MonoBehaviour
             case GameMode.FLYING:
                 GetComponent<Rigidbody2D>().gravityScale = gravityForce;
                 break;
-            case GameMode.DIRECTIONINVERTED:
-                GetComponent<Rigidbody2D>().gravityScale = gravityForce;
-                break;
             case GameMode.GRAVITYCHANGES:
+                gravityInverted = false;
                 GetComponent<Rigidbody2D>().gravityScale = gravityForce;
                 break;
             case GameMode.GRAVITYCHANGESFLYING:
+                gravityInverted = false;
                 GetComponent<Rigidbody2D>().gravityScale = gravityForce;
                 break;
         }

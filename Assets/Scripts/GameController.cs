@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour
 
     private void ChangeText(float playerX)
     {
-        Debug.Log(( playerX / endX * 100).ToString("0") + "%");
+     //   Debug.Log(( playerX / endX * 100).ToString("0") + "%");
         if (playerX != 0)
             textStatus.text = (playerX / endX * 100).ToString("0") + "%";
         else

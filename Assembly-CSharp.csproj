@@ -63,10 +63,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Coin.cs" />
+    <Compile Include="Assets\Scripts\FlyingPortal.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\GameStatus.cs" />
+    <Compile Include="Assets\Scripts\GravityChangesFlying.cs" />
+    <Compile Include="Assets\Scripts\GravityChangesPortal.cs" />
     <Compile Include="Assets\Scripts\GravityPortal.cs" />
     <Compile Include="Assets\Scripts\Limit.cs" />
+    <Compile Include="Assets\Scripts\NormalPortal.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\Saw.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
