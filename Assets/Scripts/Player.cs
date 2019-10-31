@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     private float speed = 10;
     private float jumpForce = 5;
     float playerHeight;
-    bool grounded;
+    float gravityForce;
 
     public enum GameMode { NORMAL, GRAVITYALTERED, DIRECTIONINVERTED, FLYING, GRAVITYCHANGES, GRAVITYCHANGESFLYING};
     GameMode actualGameMode;
@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
         StartPosition = transform.position;
         playerHeight = GetComponent<Collider2D>().bounds.size.y;
         actualGameMode = GameMode.NORMAL;
+        gravityForce = GetComponent<Rigidbody2D>().gravityScale;
     }
     
     void Update()
@@ -37,7 +38,6 @@ public class Player : MonoBehaviour
                 transform.Translate(speed * Time.deltaTime, 0, 0);
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    /*
                     RaycastHit2D hit =
                                Physics2D.Raycast(
                                    transform.position,
@@ -45,20 +45,53 @@ public class Player : MonoBehaviour
 
                     float floorDistance = hit.distance;
                     bool touchingGround = floorDistance < playerHeight * 0.6f;
-                    if (touchingGround)*/
-                    if (grounded)
+                    if (touchingGround)
                     {
                         GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
                     }
                 }
                 break;
             case GameMode.GRAVITYALTERED:
+                transform.Translate(speed * Time.deltaTime, 0, 0);
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    RaycastHit2D hit =
+                               Physics2D.Raycast(
+                                   transform.position,
+                                   new Vector2(0, 1));
+
+                    float floorDistance = hit.distance;
+                    bool touchingGround = floorDistance < playerHeight * 0.6f;
+                    if (touchingGround)
+                    {
+                        GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -jumpForce), ForceMode2D.Impulse);
+                    }
+                }
                 break;
             case GameMode.FLYING:
+                transform.Translate(speed * Time.deltaTime, 0, 0);
+                if (Input.GetKeyDown(KeyCode.Space))
+                    GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -jumpForce), ForceMode2D.Impulse);
                 break;
             case GameMode.DIRECTIONINVERTED:
+                transform.Translate(-speed * Time.deltaTime, 0, 0);
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    RaycastHit2D hit =
+                               Physics2D.Raycast(
+                                   transform.position,
+                                   new Vector2(0, -1));
+
+                    float floorDistance = hit.distance;
+                    bool touchingGround = floorDistance < playerHeight * 0.6f;
+                    if (touchingGround)
+                    {
+                        GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                    }
+                }
                 break;
             case GameMode.GRAVITYCHANGES:
+
                 break;
             case GameMode.GRAVITYCHANGESFLYING:
                 break;
@@ -68,19 +101,26 @@ public class Player : MonoBehaviour
 
     public void ChangeGameMode(GameMode newMode)
     {
-        switch (actualGameMode)
+        actualGameMode = newMode;
+        switch (newMode)
         {
             case GameMode.NORMAL:
+                GetComponent<Rigidbody2D>().gravityScale = gravityForce;
                 break;
             case GameMode.GRAVITYALTERED:
+                GetComponent<Rigidbody2D>().gravityScale = -gravityForce;
                 break;
             case GameMode.FLYING:
+                GetComponent<Rigidbody2D>().gravityScale = gravityForce;
                 break;
             case GameMode.DIRECTIONINVERTED:
+                GetComponent<Rigidbody2D>().gravityScale = gravityForce;
                 break;
             case GameMode.GRAVITYCHANGES:
+                GetComponent<Rigidbody2D>().gravityScale = gravityForce;
                 break;
             case GameMode.GRAVITYCHANGESFLYING:
+                GetComponent<Rigidbody2D>().gravityScale = gravityForce;
                 break;
         }
     }
@@ -88,20 +128,5 @@ public class Player : MonoBehaviour
     public void ResetPosition()
     {
         transform.position = StartPosition;
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            grounded = true;
-        }
-    }
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            grounded = false;
-        }
     }
 }
