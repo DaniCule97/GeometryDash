@@ -1937,6 +1937,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddd743e9191010f44913eb3ac80e22cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 512
   actualGameMode: 0
 --- !u!61 &286026630
 BoxCollider2D:

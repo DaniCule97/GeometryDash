@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
 {
     private float speed = 10;
     private float jumpForce = 5;
+
+    public LayerMask groundLayer;
     float playerHeight;
     float gravityForce;
     bool gravityInverted;
@@ -34,21 +36,13 @@ public class Player : MonoBehaviour
     }
     private void FixedUpdate()
     {
-
         transform.Translate(speed * Time.deltaTime, 0, 0);
         switch (actualGameMode)
         {
             case GameMode.NORMAL:
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    RaycastHit2D hit =
-                               Physics2D.Raycast(
-                                   transform.position,
-                                   new Vector2(0, -1));
-
-                    float floorDistance = hit.distance;
-                    bool touchingGround = floorDistance < playerHeight * 0.6f;
-                    if (touchingGround)
+                    if (isGrounded(true))
                     {
                         GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
                     }
@@ -57,14 +51,7 @@ public class Player : MonoBehaviour
             case GameMode.GRAVITYALTERED:
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    RaycastHit2D hit =
-                               Physics2D.Raycast(
-                                   transform.position,
-                                   new Vector2(0, 1));
-
-                    float floorDistance = hit.distance;
-                    bool touchingGround = floorDistance < playerHeight * 0.6f;
-                    if (touchingGround)
+                    if (isGrounded(false))
                     {
                         GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -jumpForce), ForceMode2D.Impulse);
                     }
@@ -77,19 +64,7 @@ public class Player : MonoBehaviour
             case GameMode.GRAVITYCHANGES:
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    RaycastHit2D hit;
-                    if (gravityInverted)
-                        hit = Physics2D.Raycast(
-                            transform.position,
-                            new Vector2(0, 1));
-                    else
-                        hit = Physics2D.Raycast( 
-                            transform.position,
-                            new Vector2(0, -1));
-
-                    float floorDistance = hit.distance;
-                    bool touchingGround = floorDistance < playerHeight * 0.6f;
-                    if (touchingGround)
+                    if (isGrounded(!gravityInverted))
                     {
                         gravityForce = -gravityForce;
                         GetComponent<Rigidbody2D>().gravityScale = gravityForce;
@@ -131,6 +106,29 @@ public class Player : MonoBehaviour
                 GetComponent<Rigidbody2D>().gravityScale = gravityForce;
                 break;
         }
+    }
+
+    bool isGrounded(bool downDirection)
+    {
+        Vector2 position = transform.position;
+        Vector2 direction = downDirection? Vector2.down: Vector2.up;
+        float distance = 0.7f;
+
+        RaycastHit2D hit = Physics2D.Raycast(position, direction, distance, groundLayer);
+        if (hit.collider != null)
+        {
+            return true;
+        }
+
+        return false;
+        /*
+        RaycastHit2D hit = Physics2D.Raycast(
+                            transform.position,
+                            new Vector2(0, downDirection? -1: 1));
+
+                    float floorDistance = hit.distance;
+        return floorDistance < playerHeight * 0.6f;
+        */
     }
 
     public void ResetPosition()
