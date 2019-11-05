@@ -130,7 +130,18 @@ public class Player : MonoBehaviour
         return floorDistance < playerHeight * 0.6f;
         */
     }
-
+    public void SuperJump() //Only used on normal mode and Inverted Gravity
+    {
+        switch (actualGameMode)
+        {
+            case GameMode.NORMAL:
+                GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce*1.5f), ForceMode2D.Impulse);
+                break;
+            case GameMode.GRAVITYALTERED:
+                GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -jumpForce*1.5f), ForceMode2D.Impulse);
+                break;
+        }
+    }
     public void ResetPosition()
     {
         transform.position = StartPosition;
