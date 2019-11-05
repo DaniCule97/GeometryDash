@@ -4,29 +4,28 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    // Start is called before the first frame update
+    
     [SerializeField] private int id;
-
+    private bool catched;
     public int Id { get => id; set => id = value; }
 
-    void Start()
+    private void Start()
     {
-        
+        catched = false;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
-            FindObjectOfType<GameController>().SendMessage("GetCoin", id);
+            catched = true;
             //AudioSource.PlayClipAtPoint(GetComponent<AudioSource>().clip, Camera.main.transform.position);
-            Destroy(gameObject);
+            this.gameObject.SetActive(false);
         }
+    }
+
+    public void Visible()
+    {
+        catched = false;
+        this.gameObject.SetActive(false);
     }
 }

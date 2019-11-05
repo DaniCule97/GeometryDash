@@ -10,14 +10,22 @@ public class GameController : MonoBehaviour
     [SerializeField] TMP_Text textStatus;
     int actualLevel;
     [SerializeField] Transform finish;
-    [SerializeField] Coin[] coins;
-    
+
+    Coin[] coins;
+    [SerializeField] Coin coin1;
+    [SerializeField] Coin coin2;
+    [SerializeField] Coin coin3;
+
     float endX;
 
     public float EndX { get => endX; set => endX = value; }
 
     void Start()
     {
+        coins = new Coin[3];
+        coins[0] = coin1;
+        coins[1] = coin2;
+        coins[2] = coin3;
         endX = finish.position.x; //Coins lo inicializo a 3 porque todos los niveles tienen 3
     }
     void Update()
@@ -32,15 +40,15 @@ public class GameController : MonoBehaviour
         else
             textStatus.text = "0%";
     }
-    private void GetCoin(int coinID)
+
+    private void ResetCoins()
     {
-        foreach(Coin c in coins)
+        foreach (Coin c in coins)
         {
-            if (c.Id == coinID)
-                c.enabled = false;
+            c.Visible();
         }
     }
-    
+
     private void NextLevel()
     {
         actualLevel++;

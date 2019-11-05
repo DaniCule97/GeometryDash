@@ -21,7 +21,7 @@ public class GameStatus : MonoBehaviour
     }
     private void Start()
     {
-        highestLevel = 1;
+        highestLevel = 5;
         points = 0;
         actualLevel = 1;
     }
