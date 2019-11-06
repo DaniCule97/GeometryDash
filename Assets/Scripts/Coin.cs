@@ -18,7 +18,7 @@ public class Coin : MonoBehaviour
         if (collision.tag == "Player")
         {
             catched = true;
-            //AudioSource.PlayClipAtPoint(GetComponent<AudioSource>().clip, Camera.main.transform.position);
+            AudioSource.PlayClipAtPoint(GetComponent<AudioSource>().clip, Camera.main.transform.position);
             this.gameObject.SetActive(false);
         }
     }

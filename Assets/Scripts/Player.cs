@@ -144,6 +144,7 @@ public class Player : MonoBehaviour
     }
     public void ResetPosition()
     {
+        AudioSource.PlayClipAtPoint(GetComponent<AudioSource>().clip, Camera.main.transform.position);
         transform.position = StartPosition;
     }
 }
