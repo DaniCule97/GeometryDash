@@ -6,7 +6,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private float speed = 10;
-    private float jumpForce = 5;
+    private float jumpForce = 5.1f;
 
     public LayerMask groundLayer;
     float playerHeight;
@@ -26,7 +26,6 @@ public class Player : MonoBehaviour
         playerHeight = GetComponent<Collider2D>().bounds.size.y;
         gravityForce = GetComponent<Rigidbody2D>().gravityScale;
         ChangeGameMode(actualGameMode);
-        Debug.Log(gravityForce);
     }
     
     void Update()
@@ -145,6 +144,7 @@ public class Player : MonoBehaviour
     public void ResetPosition()
     {
         AudioSource.PlayClipAtPoint(GetComponent<AudioSource>().clip, Camera.main.transform.position);
+        FindObjectOfType<GameController>().SendMessage("ResetLevel");
         transform.position = StartPosition;
     }
 }

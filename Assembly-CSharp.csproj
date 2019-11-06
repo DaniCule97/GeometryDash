@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Coin.cs" />
+    <Compile Include="Assets\Scripts\FinishLine.cs" />
     <Compile Include="Assets\Scripts\FlyingPortal.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\GameStatus.cs" />
@@ -96,6 +97,9 @@
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>E:/Cosas Clase/2019/android - Games/games/Geometry Dash/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Cinemachine">
+      <HintPath>E:/Cosas Clase/2019/android - Games/games/Geometry Dash/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>E:/Cosas Clase/2019/android - Games/games/Geometry Dash/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
@@ -119,6 +123,9 @@
     </Reference>
     <Reference Include="Unity.2D.Tilemap.Editor">
       <HintPath>E:/Cosas Clase/2019/android - Games/games/Geometry Dash/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+      <HintPath>E:/Cosas Clase/2019/android - Games/games/Geometry Dash/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>E:/Cosas Clase/2019/android - Games/games/Geometry Dash/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>

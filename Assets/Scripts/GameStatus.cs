@@ -5,10 +5,8 @@ using UnityEngine;
 public class GameStatus : MonoBehaviour
 {
     private int actualLevel;
-    private int points;
     private int highestLevel;
     
-    public int Points { get => points; set => points = value; }
     public int ActualLevel { get => actualLevel; set => actualLevel = value; }
     public int HighestLevel { get => highestLevel; }
 
@@ -18,11 +16,11 @@ public class GameStatus : MonoBehaviour
             FindObjectsOfType<GameStatus>().Length;
         if (gameStatusCount > 1) { Destroy(gameObject); }
         else { DontDestroyOnLoad(gameObject); }
+
+        actualLevel = 1;
     }
     private void Start()
     {
-        highestLevel = 5;
-        points = 0;
-        actualLevel = 1;
+        highestLevel = 2;
     }
 }

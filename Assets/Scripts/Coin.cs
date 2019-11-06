@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    
+    //Las monedas se utilizarian para desbloquear niveles bonus
+
     [SerializeField] private int id;
     private bool catched;
     public int Id { get => id; set => id = value; }
@@ -26,6 +27,6 @@ public class Coin : MonoBehaviour
     public void Visible()
     {
         catched = false;
-        this.gameObject.SetActive(false);
+        this.gameObject.SetActive(true);
     }
 }
